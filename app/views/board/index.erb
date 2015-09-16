@@ -2,32 +2,27 @@
 
   <div class="player_container player_one">
     <div class="ability_container">
-      <table class="ability_table">
-        <tr>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-        </tr>
-        <tr>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-        </tr>
-        <tr>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-        </tr>
-      </table>
+      <form method="post" action="/use_ability">
+        <table class="ability_table">
+          <% @board.get_ship_abilities(:player_one).each.with_index do |a,i| %>
+            <% if i % 4 == 0 %>
+              <tr>
+            <% end %>
+
+            <td><input type="image" src="crosshair.png" name="attack" value=<%= a[:name] %>><p><%= a[:name] %></p></td>
+
+            <% if i % 4 == 3 %>
+              </tr>
+            <% end %>
+          <% end %>
+        </table>
+      </form>
     </div>
     <div class="card_container">
       <div class="health_bar_container">
         <label>HP: </label>
         <div class="health_bar">
-          <div class="health_fill <%= @board.get_health_bar_class %>"></div>
+          <div class="health_fill <%= @board.get_health_bar_class(:player_one) %>"></div>
         </div>
       </div>
         <div class="ship_stats_container">
@@ -46,32 +41,27 @@
 
   <div class="player_container player_two">
     <div class="ability_container">
-      <table class="ability_table">
-        <tr>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-        </tr>
-        <tr>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-        </tr>
-        <tr>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-          <td><img src="crosshair.png"/></td>
-        </tr>
-      </table>
+      <form method="post" action="/use_ability">
+        <table class="ability_table">
+          <% @board.get_ship_abilities(:player_two).each.with_index do |a,i| %>
+            <% if i % 4 == 0 %>
+              <tr>
+            <% end %>
+
+            <td><input type="image" src="crosshair.png" name="attack" value=<%= a[:name] %>><p><%= a[:name] %></p></td>
+
+            <% if i % 4 == 3 %>
+              </tr>
+            <% end %>
+          <% end %>
+        </table>
+      </form>
     </div>
     <div class="card_container">
       <div class="health_bar_container">
         <label>HP: </label>
         <div class="health_bar">
-          <div class="health_fill <%= @board.get_health_bar_class %>"></div>
+          <div class="health_fill <%= @board.get_health_bar_class(:player_two) %>"></div>
         </div>
       </div>
       <div class="ship_stats_container">
