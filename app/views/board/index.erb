@@ -1,0 +1,82 @@
+<div id="board_container">
+
+  <div class="player_container player_one">
+    <div class="ability_container">
+      <table class="ability_table">
+        <tr>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+        </tr>
+        <tr>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+        </tr>
+        <tr>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+        </tr>
+      </table>
+    </div>
+    <div class="card_container">
+      <div class="health_bar_container">
+        <label>HP: </label>
+        <div class="health_bar">
+          <div class="health_fill <%= @board.get_health_bar_class %>"></div>
+        </div>
+      </div>
+        <div class="ship_stats_container">
+          <p>insert ship attack power here</p>
+        </div>
+    </div>
+  </div>
+
+  <div id="combat_log_container">
+    <div id="combat_log">
+      <% @combat_log.each do |c| %>
+        <p class="combat_line"><%= c %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="player_container player_two">
+    <div class="ability_container">
+      <table class="ability_table">
+        <tr>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+        </tr>
+        <tr>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+        </tr>
+        <tr>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+          <td><img src="crosshair.png"/></td>
+        </tr>
+      </table>
+    </div>
+    <div class="card_container">
+      <div class="health_bar_container">
+        <label>HP: </label>
+        <div class="health_bar">
+          <div class="health_fill <%= @board.get_health_bar_class %>"></div>
+        </div>
+      </div>
+      <div class="ship_stats_container">
+        <p>insert ship attack power here</p>
+      </div>
+    </div>
+  </div>
+</div>
