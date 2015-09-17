@@ -1,25 +1,31 @@
 <a style="color: #fff;" href="/board">Reset</a>
 <p style="color: #fff;"><%=@temp1%></p>
+<script type="text/javascript">
+
+  var ship_one_in =  <%= Board.get_game.ships[0].to_json %>;
+  var ship_two_in = <%= Board.get_game.ships[1].to_json %>;
+
+  var ship_one_abilities_in = <%= Board.get_ship_abilities(Board.get_game.ships[0]).to_json %>;
+  var ship_two_abilities_in = <%= Board.get_ship_abilities(Board.get_game.ships[0]).to_json %>;
+</script>
 <div id="board_container">
 
   <div class="player_container player_one">
     <input type="hidden" name="player_id" value=<%= Board.get_game.ships[0][:id] %>>
     <div class="ability_container">
-      <form method="post" action="/use_ability">
-        <table class="ability_table <%= "not_turn" unless Board.get_game.is_turn?(Board.get_game.ships[0][:id])%>">
+        <table class="ability_table">
           <% Board.get_ship_abilities(Board.get_game.ships[0]).each_with_index do |(k,v),i| %>
             <% if i % 4 == 0 %>
               <tr>
             <% end %>
 
-            <td><input type="image" src="crosshair.png" name="attack" value=<%= k %> <%= "disabled" unless Board.get_game.is_turn?(Board.get_game.ships[0][:id])%>><p><%= v[:name] %></p></td>
+            <td><input class="attack_button" type="image" src="crosshair.png" name="attack" value=<%= k %>><p><%= v[:name] %></p></td>
 
             <% if i % 4 == 3 %>
               </tr>
             <% end %>
           <% end %>
         </table>
-      </form>
     </div>
     <div class="card_container">
       <div class="health_bar_container">
@@ -42,21 +48,19 @@
   <div class="player_container player_two">
     <input type="hidden" name="player_id" value=<%= Board.get_game.ships[1][:id] %>>
     <div class="ability_container">
-      <form method="post" action="/use_ability">
-        <table class="ability_table <%= "not_turn" unless Board.get_game.is_turn?(Board.get_game.ships[1][:id])%>">
+        <table class="ability_table">
           <% Board.get_ship_abilities(Board.get_game.ships[1]).each_with_index do |(k,v),i| %>
             <% if i % 4 == 0 %>
               <tr>
             <% end %>
 
-            <td><input type="image" src="crosshair.png" name="attack" value=<%= k %> <%= "disabled" unless Board.get_game.is_turn?(Board.get_game.ships[1][:id])%>><p><%= v[:name] %></p></td>
+            <td><input type="image" src="crosshair.png" name="attack" value=<%= k %> ><p><%= v[:name] %></p></td>
 
             <% if i % 4 == 3 %>
               </tr>
             <% end %>
           <% end %>
         </table>
-      </form>
     </div>
     <div class="card_container">
       <div class="health_bar_container">

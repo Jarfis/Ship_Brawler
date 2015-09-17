@@ -8,6 +8,7 @@ add armor/shields
 maybe add action points and a ship can only use x action points per turn, different weapons/abilities/moving take different amounts of points
 
 third pass add ability to attack opponents weapons to disable them
+have the weapons be div objects, clicking on them sets the value of a hidden input in the ability form
 
 fourth pass add non weapon subsystems; bridge, engineering, weapons control
 
@@ -18,3 +19,10 @@ weapons can only attack within their range
 sixth pass add special abilities; emp, ecm, ewar, things of that nature
 
 seventh pass add graphics
+
+
+
+
+
+
+for the energy bar, have two filler divs, make the top one shrink when mousing over an ability, make them both shrink when clicking on it
