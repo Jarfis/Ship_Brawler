@@ -1,15 +1,18 @@
+<a style="color: #fff;" href="/board">Reset</a>
+<p style="color: #fff;"><%=@temp1%></p>
 <div id="board_container">
 
   <div class="player_container player_one">
+    <input type="hidden" name="player_id" value=<%= Board.get_game.ships[0][:id] %>>
     <div class="ability_container">
       <form method="post" action="/use_ability">
-        <table class="ability_table">
-          <% @board.get_ship_abilities(:player_one).each.with_index do |a,i| %>
+        <table class="ability_table <%= "not_turn" unless Board.get_game.is_turn?(Board.get_game.ships[0][:id])%>">
+          <% Board.get_ship_abilities(Board.get_game.ships[0]).each_with_index do |(k,v),i| %>
             <% if i % 4 == 0 %>
               <tr>
             <% end %>
 
-            <td><input type="image" src="crosshair.png" name="attack" value=<%= a[:name] %>><p><%= a[:name] %></p></td>
+            <td><input type="image" src="crosshair.png" name="attack" value=<%= k %> <%= "disabled" unless Board.get_game.is_turn?(Board.get_game.ships[0][:id])%>><p><%= v[:name] %></p></td>
 
             <% if i % 4 == 3 %>
               </tr>
@@ -22,10 +25,10 @@
       <div class="health_bar_container">
         <label>HP: </label>
         <div class="health_bar">
-          <div class="health_fill <%= @board.get_health_bar_class(:player_one) %>"></div>
+          <div class="health_fill" style="width:<%= Board.get_health_bar_percent(Board.get_game.ships[0]) %>"></div>
         </div>
       </div>
-        <div class="ship_stats_container">
+        <div class="weapon_stats_container">
           <p>insert ship attack power here</p>
         </div>
     </div>
@@ -33,22 +36,20 @@
 
   <div id="combat_log_container">
     <div id="combat_log">
-      <% @combat_log.each do |c| %>
-        <p class="combat_line"><%= c %></p>
-      <% end %>
     </div>
   </div>
 
   <div class="player_container player_two">
+    <input type="hidden" name="player_id" value=<%= Board.get_game.ships[1][:id] %>>
     <div class="ability_container">
       <form method="post" action="/use_ability">
-        <table class="ability_table">
-          <% @board.get_ship_abilities(:player_two).each.with_index do |a,i| %>
+        <table class="ability_table <%= "not_turn" unless Board.get_game.is_turn?(Board.get_game.ships[1][:id])%>">
+          <% Board.get_ship_abilities(Board.get_game.ships[1]).each_with_index do |(k,v),i| %>
             <% if i % 4 == 0 %>
               <tr>
             <% end %>
 
-            <td><input type="image" src="crosshair.png" name="attack" value=<%= a[:name] %>><p><%= a[:name] %></p></td>
+            <td><input type="image" src="crosshair.png" name="attack" value=<%= k %> <%= "disabled" unless Board.get_game.is_turn?(Board.get_game.ships[1][:id])%>><p><%= v[:name] %></p></td>
 
             <% if i % 4 == 3 %>
               </tr>
@@ -61,7 +62,7 @@
       <div class="health_bar_container">
         <label>HP: </label>
         <div class="health_bar">
-          <div class="health_fill <%= @board.get_health_bar_class(:player_two) %>"></div>
+          <div class="health_fill" style="width:<%= Board.get_health_bar_percent(Board.get_game.ships[1]) %>"></div>
         </div>
       </div>
       <div class="ship_stats_container">

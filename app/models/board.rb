@@ -1,21 +1,41 @@
 class Board
-  def get_current_player_stats
+
+  def self.start_game
+    game = Game.first || Game.create
+    game.game_over = false
+
+    ships = Ship.where(game: game.id)
+
+    unless ships.nil?# || ships.length > 0
+      ships.destroy_all
+    end
+    ship1=Ship.create(max_health: 100, current_health: 100, game_id: game.id, ship_name: "placeholder 1")
+    Ship.create(max_health: 100, current_health: 75, game_id: game.id, ship_name: "placeholder 2")
+
+    game.current_player = ship1.id
+    game.save
+  end
+
+  def self.get_current_player_stats
   end
 
   #maybe later
   # def print_ship_card(ship)
   # end
 
-  def get_health_bar_class(player)
-    #game.get_player_ship(player).get_health + some jiggering here ==
-    "percent_75"
+  def self.get_game
+    Game.first
   end
 
-  def get_attack_power_class(player)
+  def self.get_health_bar_percent(player_id)
+    get_game.get_player_ship(player_id).get_health_percent.to_s + "%"
+  end
+
+  def self.get_attack_power_class(player)
     #game.get_player_ship(player).get_attack_power
   end
 
-  def get_all_combat_log
+  def self.get_all_combat_log
     #CombatLog.get_all
     temp = []
     20.times do
@@ -25,28 +45,7 @@ class Board
     temp
   end
 
-  def get_ship_abilities(player)
-    #@game.get_player_ship(player).get_abilities
-    ability_one={
-      name: "attack",
-      damage: 5
-    }
-    ability_two={
-      name: "attack1",
-      damage: 5
-    }
-    ability_three={
-      name: "attack2",
-      damage: 5
-    }
-    ability_four={
-      name: "attack3",
-      damage: 5
-    }
-    ability_five={
-      name: "attack4",
-      damage: 5
-    }
-    [ability_one, ability_two, ability_three, ability_four, ability_five]
+  def self.get_ship_abilities(player_id)
+    get_game.get_player_ship(player_id).abilities
   end
 end

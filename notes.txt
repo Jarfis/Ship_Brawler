@@ -1,0 +1,20 @@
+Player spaceship vs AI/Other player spaceship
+text graphics
+display stats of each ship, HP/AP (Attack damage can be AP times a randomizer of some sort, maybe have misses, crits, glancing blows)
+players take turns, first pass will just be one player attacking, then the other, then back to the first until one is dead
+
+second pass add different weapons to the ship, use either cooldowns or ammo to limit use
+add armor/shields
+maybe add action points and a ship can only use x action points per turn, different weapons/abilities/moving take different amounts of points
+
+third pass add ability to attack opponents weapons to disable them
+
+fourth pass add non weapon subsystems; bridge, engineering, weapons control
+
+fifth pass add engines and weapon ranges
+calcualte distance between the two ships, engine speed determines how many action points it takes to close a distance
+weapons can only attack within their range
+
+sixth pass add special abilities; emp, ecm, ewar, things of that nature
+
+seventh pass add graphics

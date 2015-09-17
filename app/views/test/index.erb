@@ -1,0 +1,9 @@
+<p style="color: #FFF;">Get other players ship: <%= Board.get_game.get_other_player_ship.id %></p>
+<p style="color: #FFF;">Get player ship: <%=  %></p>
+<p style="color: #FFF;">Get ability: <%= Board.get_game.get_current_player_ship.get_ability(:attack_1) %></p>
+<p style="color: #FFF;">COmbat log: <%= Board.get_all_combat_log %></p>
+<p style="color: #FFF;">is turn?: <%= "disabled" unless Board.get_game.is_turn?(Board.get_game.ships[0][:id]) %> </p>
+<p style="color: #FFF;">is turn?: <%= "disabled" if Board.get_game.is_turn?(Board.get_game.ships[0][:id]) %> </p>
+<% Board.get_game.get_current_player_ship.damage(110) %>
+<p style="color: #FFF;">is_dead?: <%= Board.get_game.get_current_player_ship.is_dead? %></p>
+<p style="color: #FFF;"></p>
