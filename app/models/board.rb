@@ -27,25 +27,7 @@ class Board
     Game.first
   end
 
-  def self.get_health_bar_percent(player_id)
-    get_game.get_player_ship(player_id).get_health_percent.to_s + "%"
-  end
-
-  def self.get_attack_power_class(player)
-    #game.get_player_ship(player).get_attack_power
-  end
-
-  def self.get_all_combat_log
-    #CombatLog.get_all
-    temp = []
-    20.times do
-      #temp << @game.get_combat_line
-      temp << "player 1 did X damage"
-    end
-    temp
-  end
-
   def self.get_ship_abilities(player_id)
-    get_game.get_player_ship(player_id).abilities
+    get_game.get_player_ship(player_id).placeholder_abilities
   end
 end
