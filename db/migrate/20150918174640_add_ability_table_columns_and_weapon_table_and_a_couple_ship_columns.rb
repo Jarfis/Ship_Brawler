@@ -11,6 +11,7 @@ class AddAbilityTableColumnsAndWeaponTableAndACoupleShipColumns < ActiveRecord::
       t.string :name_print
       t.integer :damage
       t.integer :ammo
+      t.integer :max_ammo
     end
 
     change_table :ships do |t|

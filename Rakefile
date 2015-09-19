@@ -63,13 +63,13 @@ task "db:populate" do
   ShipWeapon.destroy_all
   ShipAbility.destroy_all
   #ships
-  Ship.create(ship_name_value: "first_ship", ship_name: "First Ship", max_health: 100, current_health: 100, max_energy: 50, energy_recharge: 10, current_energy: 50)
-  Ship.create(ship_name_value: "second_ship", ship_name: "Second Ship", max_health: 100, current_health: 100, max_energy: 100, energy_recharge: 25, current_energy: 100)
+  Ship.create(ship_name_value: "rocket", ship_name: "Zeerust Rocket", max_health: 100, current_health: 100, max_energy: 50, energy_recharge: 10, current_energy: 50, ship_image: "/rocket.png")
+  Ship.create(ship_name_value: "saucer", ship_name: "Flying Saucer", max_health: 100, current_health: 100, max_energy: 100, energy_recharge: 25, current_energy: 100, ship_image: "/saucer.png")
 
   #weapons
-  Weapon.create(name_value: "default",name_print: "Default Attack", damage: 5, ammo: 0)
-  Weapon.create(name_value: "mega_shot", name_print: "Mega Shot", damage: 50, ammo:1)
-  Weapon.create(name_value: "mid_shot", name_print: "Medium Shot", damage: 15, ammo:5)
+  Weapon.create(name_value: "default",name_print: "Default Attack", damage: 5, ammo: 0, max_ammo:0)
+  Weapon.create(name_value: "mega_shot", name_print: "Mega Shot", damage: 50, ammo:1, max_ammo: 2)
+  Weapon.create(name_value: "mid_shot", name_print: "Medium Shot", damage: 15, ammo:5, max_ammo:10)
 
   #abilities
   Ability.create(name_value: "acid_bomb", name_print: "Acid Bomb", damage: 5, turn_length: 5, self_target: false, energy_cost: 75)
@@ -78,14 +78,14 @@ task "db:populate" do
 
   #assigning weapons and abilities to each ship
   puts "=============================="
-  puts Ship.where(ship_name_value: "first_ship")[0].inspect
+  puts Ship.where(ship_name_value: "rocket")[0].inspect
   puts "=============================="
-  ShipWeapon.create(ship_id: (Ship.find_by(ship_name_value: "first_ship").id), weapon_id: (Weapon.find_by(name_value: "default")).id)
-  ShipWeapon.create(ship_id: (Ship.find_by(ship_name_value: "second_ship").id), weapon_id: (Weapon.find_by(name_value: "default")).id)
+  ShipWeapon.create(ship_id: (Ship.find_by(ship_name_value: "rocket").id), weapon_id: (Weapon.find_by(name_value: "default")).id)
+  ShipWeapon.create(ship_id: (Ship.find_by(ship_name_value: "saucer").id), weapon_id: (Weapon.find_by(name_value: "default")).id)
 
-  ShipAbility.create(ship_id: (Ship.find_by(ship_name_value: "second_ship").id), ability_id: (Ability.find_by(name_value: "acid_bomb")).id)
-  ShipAbility.create(ship_id: (Ship.find_by(ship_name_value: "second_ship").id), ability_id: (Ability.find_by(name_value: "regenerate")).id)
+  ShipAbility.create(ship_id: (Ship.find_by(ship_name_value: "saucer").id), ability_id: (Ability.find_by(name_value: "acid_bomb")).id)
+  ShipAbility.create(ship_id: (Ship.find_by(ship_name_value: "saucer").id), ability_id: (Ability.find_by(name_value: "regenerate")).id)
 
-  ShipWeapon.create(ship_id: (Ship.find_by(ship_name_value: "first_ship").id), weapon_id: (Weapon.find_by(name_value: "mega_shot")).id)
-  ShipWeapon.create(ship_id: (Ship.find_by(ship_name_value: "first_ship").id), weapon_id: (Weapon.find_by(name_value: "mid_shot")).id)
+  ShipWeapon.create(ship_id: (Ship.find_by(ship_name_value: "rocket").id), weapon_id: (Weapon.find_by(name_value: "mega_shot")).id)
+  ShipWeapon.create(ship_id: (Ship.find_by(ship_name_value: "rocket").id), weapon_id: (Weapon.find_by(name_value: "mid_shot")).id)
 end

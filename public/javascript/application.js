@@ -16,6 +16,9 @@ $(document).ready(function() {
   bind_weapons_and_abilities();
   update_health_energy_fill();
   initialize_ammo();
+
+  draw_ship("player_one");
+  draw_ship("player_two");
   //$("#winner_modal").hide();
 
   $(".ability_table td").hover(
@@ -48,11 +51,8 @@ $(document).ready(function() {
 
   function initialize_ammo(){
     $("tr.weapons input").each(function(index){
-      console.dir(ships[get_element_player($(this))].weapons[$(this).attr("value")].ammo);
-      console.dir($(this).attr("value"));
       for (i=0;i<ships[get_element_player($(this))].weapons[$(this).attr("value")].ammo;i++)
       {
-        console.dir(i);
         $(this).parent().find(".ammo_container").prepend("<img src=\"ammo.png\" class=\"ammo_icon\"/>");
       }
     });
@@ -66,7 +66,7 @@ $(document).ready(function() {
 
   function clear_energy_cost(the_player_container)
   {
-    $("."+the_player_container + " .energy_over_fill").css("width", ships[the_player_container].current_energy + "%");
+    $("."+the_player_container + " .energy_over_fill").css("width", (ships[the_player_container].current_energy/ships[the_player_container].max_energy)*100 + "%");
   }
 
   function display_ability_info(the_player_container, ability){
@@ -112,13 +112,13 @@ $(document).ready(function() {
 
   function bind_weapons_and_abilities(){
     $(".ability_table td").off("click");
-    $(".ability_table:not(.not_turn) .weapons td").on("click", function(){
+    $(".ability_table:not(.not_turn) .weapons td:not(.no_ammo)").on("click", function(){
       //ships[$(this).closest(".player_container").attr("class").split(" "[1])]
       var theweapon = current_player[0].weapons[$(this).find("input").attr("value")];
       use_weapon(current_player[0],theweapon,other_player[0]);
       update_health_energy_fill();
     });
-    $(".ability_table:not(.not_turn) .abilities td").on("click", function(){
+    $(".ability_table:not(.not_turn) .abilities td:not(.no_energy)").on("click", function(){
       //ships[$(this).closest(".player_container").attr("class").split(" "[1])]
       var attackee;
       var theability = current_player[0].abilities[$(this).find("input").attr("value")];
@@ -133,7 +133,13 @@ $(document).ready(function() {
 
   function use_weapon(attacker, weapon, attackee){
     attackee.current_health -= weapon.damage;
-    weapon.ammo -= 1;
+
+    if(weapon.max_ammo != 0)
+    {
+      weapon.ammo -= 1;
+      update_ammo(weapon);
+    }
+
     if (is_target_dead(attackee))
     {
       end_game();
@@ -141,6 +147,19 @@ $(document).ready(function() {
     else
     {
       toggle_turns();
+    }
+  }
+
+  function update_ammo(weapon){
+    $("."+current_player[1]+" :input[value='"+weapon.name_value+"']").parent().find(".ammo_container").empty();
+    for (i=0;i<weapon.ammo;i++)
+    {
+      $("."+current_player[1]+" :input[value='"+weapon.name_value+"']").parent().find(".ammo_container").prepend("<img src=\"ammo.png\" class=\"ammo_icon\"/>");
+    }
+
+    if(weapon.ammo <=0)
+    {
+      $("."+current_player[1]+" :input[value='"+weapon.name_value+"']").parent().addClass("no_ammo");
     }
   }
 
@@ -158,19 +177,34 @@ $(document).ready(function() {
     }
   }
 
-  function update_health_energy_fill(){
-    $(".player_one .health_fill").css("width", ships.player_one.current_health+"%");
-    $(".player_two .health_fill").css("width", ships.player_two.current_health+"%");
-
-    $(".player_one .energy_over_fill").css("width", ships.player_one.current_energy+"%");
-    $(".player_two .energy_over_fill").css("width", ships.player_two.current_energy+"%");
-
-    $(".player_one .energy_under_fill").css("width", ships.player_one.current_energy+"%");
-    $(".player_two .energy_under_fill").css("width", ships.player_two.current_energy+"%");
+  function update_abilities_low_energy(){
+    $("."+current_player[1]+" tr.abilities input").each(function(index){
+      if(current_player[0].abilities[$(this).val()].energy_cost > current_player[0].current_energy)
+      {
+        if(!($(this).parent().hasClass("no_energy")))
+        {
+          $(this).parent().addClass("no_energy");
+        }
+      }
+      else
+      {
+        if($(this).parent().hasClass("no_energy"))
+        {
+          $(this).parent().removeClass("no_energy");
+        }
+      }
+    });
   }
 
-  function update_ammo_counts(){
+  function update_health_energy_fill(){
+    $(".player_one .health_fill").css("width", (ships.player_one.current_health/ships.player_one.max_health)*100+"%");
+    $(".player_two .health_fill").css("width", (ships.player_two.current_health/ships.player_two.max_health)*100+"%");
 
+    $(".player_one .energy_over_fill").css("width", (ships.player_one.current_energy/ships.player_one.max_energy)*100+"%");
+    $(".player_two .energy_over_fill").css("width", (ships.player_two.current_energy/ships.player_two.max_energy)*100+"%");
+
+    $(".player_one .energy_under_fill").css("width", (ships.player_one.current_energy/ships.player_one.max_energy)*100+"%");
+    $(".player_two .energy_under_fill").css("width", (ships.player_two.current_energy/ships.player_two.max_energy)*100+"%");
   }
 
   function is_target_dead(target){
@@ -178,6 +212,14 @@ $(document).ready(function() {
   }
 
   function toggle_turns(){
+    if((current_player[0].current_energy + current_player[0].energy_recharge) >= current_player[0].max_energy){
+      current_player[0].current_energy = current_player[0].max_energy;
+    }
+    else
+    {
+      current_player[0].current_energy += current_player[0].energy_recharge;
+    }
+
     if (current_player[0].id == ships.player_one.id)
     {
       current_player = [ships.player_two, "player_two"];
@@ -188,13 +230,8 @@ $(document).ready(function() {
       current_player = [ships.player_one, "player_one"];
       other_player = [ships.player_two, "player_two"];
     }
-    if((current_player[0].current_energy + current_player[0].energy_recharge) >= 100){
-      current_player[0].current_energy = 100;
-    }
-    else
-    {
-      current_player[0].current_energy += current_player[0].energy_recharge;
-    }
+    update_abilities_low_energy();
+
     update_health_energy_fill();
     toggle_buttons();
     bind_weapons_and_abilities();
@@ -208,5 +245,9 @@ $(document).ready(function() {
   function end_game(){
     $("#winner_modal").show();
     $("#winner_name").text(current_player[0].ship_name);
+  }
+
+ function draw_ship(the_player){
+   $("."+the_player + " .ship_wrapper").prepend("<img class='ship_image' src="+ships[the_player].ship_image+"></img>");
   }
 });

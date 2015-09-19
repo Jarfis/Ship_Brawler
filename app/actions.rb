@@ -5,8 +5,8 @@ get '/' do
 end
 
 get "/board" do
-  @ship1 = Ship.find_by(ship_name_value: "first_ship")
-  @ship2 = Ship.find_by(ship_name_value: "second_ship")
+  @ship1 = Ship.find_by(ship_name_value: "rocket")
+  @ship2 = Ship.find_by(ship_name_value: "saucer")
   erb :"board/index"
 end
 

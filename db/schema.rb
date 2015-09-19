@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150918181629) do
+ActiveRecord::Schema.define(version: 20150919154618) do
 
   create_table "abilities", force: :cascade do |t|
     t.string  "name_value"
@@ -39,8 +39,8 @@ ActiveRecord::Schema.define(version: 20150918181629) do
     t.string  "ship_name"
     t.integer "max_energy"
     t.integer "energy_recharge"
-    t.integer "start_energy"
     t.integer "current_energy"
+    t.string  "ship_image"
   end
 
   create_table "weapons", force: :cascade do |t|
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20150918181629) do
     t.string  "name_print"
     t.integer "damage"
     t.integer "ammo"
+    t.integer "max_ammo"
   end
 
 end
