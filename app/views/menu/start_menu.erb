@@ -1,7 +1,83 @@
+<script src="/javascript/menu.js"></script>
 <div id="menu_container">
   <div class="menu_box_outer">
     <div class="menu_box_inner">
-      <a href="/board">New Game</a>
-    </div>
+      <div id="start_button">
+        <p>NEW GAME</p>
+      </div>
+      <form method="post" action="/board">
+        <div id="player_one_select_ship" class="select_ship_wrapper">
+          <input class="chosen_ship_holder" type="hidden" name="player_one_chosen_ship">
+          <h2>PLAYER ONE</h2>
+            <div class="select_ship">
+              <% Ship.find_each do |s| %>
+                <div class="a_ship" >
+                  <input type="hidden" name="ship_name_value" value=<%= s.ship_name_value %>>
+                  <h3><%= s.ship_name %></h3>
+                  <p>Max Health: <%= s.max_health %></p>
+                  <p>Weapons: </p>
+                  <ul>
+                    <% s.weapons.each do |w| %>
+                      <li>Name: <%= w.name_print %></li>
+                      <li>Damage: <%= w.damage %></li>
+                      <li>Ammo: <%= w.ammo %></li>
+                      <br/>
+                    <% end %>
+                  </ul>
+                  <% if s.abilities.size >0 %>
+                    <p>Max Energy: <%= s.max_energy %></p>
+                    <p>Energy Recharge: <%= s.energy_recharge %></p>
+                    <p>Abilities: </p>
+                    <ul>
+                      <% s.abilities.each do |a| %>
+                        <li>Name: <%= a.name_print %></li>
+                        <li>Damage: <%= a.damage %></li>
+                        <li>Duration: <%= a.turn_length %> turns</li>
+                        <br/>
+                      <% end %>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+            </div>
+        </div>
+        <div id="player_two_select_ship" class="select_ship_wrapper">
+          <input class="chosen_ship_holder" type="hidden" name="player_two_chosen_ship">
+          <h2>PLAYER TWO</h2>
+          <div class="select_ship">
+            <% Ship.find_each do |s| %>
+              <div class="a_ship" >
+                <input type="hidden" name="ship_name_value" value=<%= s.ship_name_value %>>
+                <h3><%= s.ship_name %></h3>
+                <p>Max Health: <%= s.max_health %></p>
+                <p>Weapons: </p>
+                <ul>
+                  <% s.weapons.each do |w| %>
+                    <li>Name: <%= w.name_print %></li>
+                    <li>Damage: <%= w.damage %></li>
+                    <li>Ammo: <%= w.ammo %></li>
+                    <br/>
+                  <% end %>
+                </ul>
+                <% if s.abilities.size >0 %>
+                  <p>Max Energy: <%= s.max_energy %></p>
+                  <p>Energy Recharge: <%= s.energy_recharge %></p>
+                  <p>Abilities: </p>
+                  <ul>
+                    <% s.abilities.each do |a| %>
+                      <li>Name: <%= a.name_print %></li>
+                      <li>Damage: <%= a.damage %></li>
+                      <li>Duration: <%= a.turn_length %> turns</li>
+                      <br/>
+                    <% end %>
+                  </ul>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <input id="the_submit_button" type="submit" value="Start Game">
+      </div>
+    </form>
   </div>
 </div>
