@@ -81,19 +81,32 @@ $(document).ready(function() {
     }
     else
     {
+      $(".player_container."+ the_player_container).find(".ability_damage").text(ability.damage);
       $(".player_container."+ the_player_container).find(".ability_damage").css("color", "red");
     }
 
-    $(".player_container."+ the_player_container).find(".ability_name").show()
+    if (ability.turn_length > 1)
+    {
+      $(".player_container."+ the_player_container).find(".ability_length").text(ability.turn_length);
+    }
+
+    $(".player_container."+ the_player_container).find(".ability_name").show();
+    $(".player_container."+ the_player_container).find(".ability_damage_label").show();
     $(".player_container."+ the_player_container).find(".ability_damage").show();
+    $(".player_container."+ the_player_container).find(".ability_turns_label").show();
+    $(".player_container."+ the_player_container).find(".ability_length").show();
   }
 
   function clear_ability_info(the_player_container){
     $(".player_container."+ the_player_container).find(".ability_name").text("");
     $(".player_container."+ the_player_container).find(".ability_damage").text("");
+    $(".player_container."+ the_player_container).find(".ability_length").text("");
 
-    $(".player_container."+ the_player_container).find(".ability_name").hide()
+    $(".player_container."+ the_player_container).find(".ability_name").hide();
+    $(".player_container."+ the_player_container).find(".ability_damage_label").hide();
     $(".player_container."+ the_player_container).find(".ability_damage").hide();
+    $(".player_container."+ the_player_container).find(".ability_turns_label").hide();
+    $(".player_container."+ the_player_container).find(".ability_length").hide();
   }
 
   function display_weapon_info(the_player_container, weapon){
@@ -102,6 +115,7 @@ $(document).ready(function() {
     $(".player_container."+ the_player_container).find(".weapon_damage").css("color","red");
 
     $(".player_container."+ the_player_container).find(".weapon_name").show()
+    $(".player_container."+ the_player_container).find(".weapon_damage_label").show();
     $(".player_container."+ the_player_container).find(".weapon_damage").show();
   }
 
@@ -110,6 +124,7 @@ $(document).ready(function() {
     $(".player_container."+ the_player_container).find(".weapon_damage").text("");
 
     $(".player_container."+ the_player_container).find(".weapon_name").hide()
+    $(".player_container."+ the_player_container).find(".weapon_damage_label").hide();
     $(".player_container."+ the_player_container).find(".weapon_damage").hide();
   }
 
@@ -254,11 +269,17 @@ $(document).ready(function() {
     $(".player_one .health_fill").css("width", (ships.player_one.current_health/ships.player_one.max_health)*100+"%");
     $(".player_two .health_fill").css("width", (ships.player_two.current_health/ships.player_two.max_health)*100+"%");
 
+    $(".player_one .health_text p").text(ships.player_one.current_health + "/" +ships.player_one.max_health);
+    $(".player_two .health_text p").text(ships.player_two.current_health + "/" +ships.player_two.max_health);
+
     $(".player_one .energy_over_fill").css("width", (ships.player_one.current_energy/ships.player_one.max_energy)*100+"%");
     $(".player_two .energy_over_fill").css("width", (ships.player_two.current_energy/ships.player_two.max_energy)*100+"%");
 
     $(".player_one .energy_under_fill").css("width", (ships.player_one.current_energy/ships.player_one.max_energy)*100+"%");
     $(".player_two .energy_under_fill").css("width", (ships.player_two.current_energy/ships.player_two.max_energy)*100+"%");
+
+    $(".player_one .energy_text p").text(ships.player_one.current_energy + "/" +ships.player_one.max_energy);
+    $(".player_two .energy_text p").text(ships.player_two.current_energy + "/" +ships.player_two.max_energy);
   }
 
   function is_target_dead(target){
@@ -303,8 +324,9 @@ $(document).ready(function() {
   }
 
   function end_game(){
+    $("."+other_player[1]+" .death_explosion").fadeIn(200);
     $("#winner_modal").show();
-    $("#winner_name").text(current_player[0].ship_name);
+    $("#winner_name").text(current_player[1]);
   }
 
  function draw_ship(the_player){

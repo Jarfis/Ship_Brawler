@@ -108,6 +108,7 @@ body
   border-radius: 3px;
   right:0px;
   border:solid 1px black;
+  display: none;
 }
 
 .health_bar_container
@@ -115,14 +116,26 @@ body
   position:relative;
   top:10%;
   left:10px;
-  width:80%;
+  width:95%;
   height:10%;
+}
+
+.health_text, .energy_text
+{
+  display: block;
+  float: right;
+  margin:3px;
+}
+
+.health_text p, .energy_text p
+{
+  margin:0px;
 }
 
 .health_bar
 {
   position:absolute;
-  width:100%;
+  width:85%;
   height:100%;
   background-color:red;
   display: inline;
@@ -143,14 +156,14 @@ body
   position:relative;
   top:12%;
   left:10px;
-  width:80%;
+  width:95%;
   height:10%;
 }
 
 .energy_bar
 {
   position:absolute;
-  width:100%;
+  width:85%;
   height:100%;
   background-color:yellow;
   display: inline;
@@ -185,6 +198,11 @@ body
   width:90%;
   height:56%;
   /*border:solid 1px pink;*/
+}
+
+.weapon_stats_container p
+{
+  margin:3px;
 }
 
 .ability_table
@@ -332,6 +350,7 @@ body
   margin:auto;
   border-radius: 15px;
   display: none;
+  z-index: 50;
 }
 
 #winner_wrapper
@@ -415,6 +434,7 @@ body
   position:absolute;
   height:100%;
   width:50%;
+  z-index:1;
 }
 
 .player_one .ship_image
@@ -444,9 +464,24 @@ body
   height: 100%;
 }
 
+.explosion_wrapper td, .heal_wrapper td
+{
+  width:50px;
+  height:50px;
+}
+
 .damage_explosion, .heal_plus
 {
   width:50px;
   height:50px;
+  display:none;
+}
+
+.death_explosion
+{
+  position: relative;
+  width:100%;
+  height:100%;
+  z-index: 3;
   display:none;
 }
